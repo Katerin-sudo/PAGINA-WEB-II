@@ -1,66 +1,83 @@
 ---
-title: "SciHub"
-format:
-  html:
-    toc: true
-    toc-expand: true
-    toc-depth: 4
-    toc-location: left
-    number-sections: true
-    self-contained: true
-    code-fold: false
-    output-file: index.html
-editor_options: 
-  chunk_output_type: console
-execute: 
-  warning: false
-  message: false
-  echo: true
+title: "DOE"
+author: "katerin"
+format: html
 ---
 
-# Information
+# Análisis e diseño experimental
 
-**Manuscript Title**
+## Base de datos
 
-Author List
+> https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346
 
----
+## Identificar los factores
 
-# Manuscript
+1.Factor 1: genotipo
+1.Factor 2: riego
 
-> https://docs.google.com/document/d/1B5wtKmWap6MHYjVJqlYy7HMXHWQDoprlz-om2nn777s/edit?usp=sharing
+## Identificar el modelo
 
-# Database
+Factorial en DBCA
 
-> https://docs.google.com/spreadsheets/d/1u6xgTT8jDFkHSMkK1iRrNVR-1iOINQidbEiaDCu2Nqw/edit?usp=sharing
+$$y = \mu + bloque + G + G*I + \xi$$
+# Project setup
 
-# Presentation
+```{r}
+#| label: setup
 
-> Google Slides link
-
----
-
-# *SciHub*: research pipeline repository
-
-```{}
-project-root/
-  ├── analysis.qmd          # Script with data analysis
-  ├── article.qmd           # Script for formatting the article
-  ├── article.zip           # Zipped file in Markdown from Articul8
-  ├── design/               # Experimental design and setup
-  │   ├── design                # Information of experimental setup and planning
-  │   └── labels.pdf            # Labels script from experiments
-  ├── files/                # Supporting files for the project
-  │   ├── images/               # Raw and processed images
-  │   ├── zotero/               # Zotero library (.rds)
-  │   └── template.docx         # Journal article template  
-  ├── manuscript/           # Core outputs of the article
-  │   ├── Figures               # Figures for the manuscript (.jpg & .eps)
-  │   ├── ESM                   # Electronic Supplementary Material (ESM)
-  │   └── draft.docx            # Manuscript text versions
-  └── README.qmd            # Article title with authors:
-                                # Manuscript link (Google Docs)
-                                # Database link (Google Sheets)
-                                # Presentation link (Google Slides)
+source('https://inkaverse.com/setup.r')
 ```
 
+## Data import
+
+```{r}
+gs <- "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346" %>% 
+  as_sheets_id()
+
+fb <- gs %>% 
+  range_read(ss = .,sheet = "fb") %>% 
+  mutate(across(c(1:4), ~ as.factor(.))) 
+
+fb %>% str()
+```
+# Analisis de varianza
+
+```{r}
+# aov() ó lm()
+
+md <- aov(formula = lfa ~ block + irrigation + genotype + irrigation * genotype, fb)
+
+anova(md)
+```
+# comparación de medias
+
+```{r}
+mc <- emmeans(md, ~ irrigation * genotype)
+
+mc
+
+# letras de significancia
+tab <- cld(mc,
+           adjust = "tukey",
+           Letters = letters,
+           decreasing = T)
+
+tab
+
+```
+
+# Representación gráfica
+
+```{r}
+pl <- plot_smr(data = tab
+               , x = "genotype"
+               , y = "emmean"
+               , group = "irrigation"
+               , error = "SE"
+               , sig = ".group"
+               , ylab = "Area foliar (cm2)"
+               )
+
+pl
+
+```

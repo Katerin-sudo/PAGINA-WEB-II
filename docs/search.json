@@ -19,5 +19,40 @@
     "title": "Experimental Label",
     "section": "",
     "text": "1 Setup\n\nsource(\"https://inkaverse.com/setup.r\")\n\n\n\n2 Field-book\n\ngs &lt;- \"url\" %&gt;% \n  as_sheets_id()\n\nfb &lt;- gs %&gt;% \n  range_read(ss = .,sheet = \"fb\")\n\n#&gt; Google fonts: https://fonts.google.com/\n\nfont &lt;- c(\"Merriweather Sans\", \"Permanent Marker\", \"Tillana\")\nhuito_fonts(font)\n\n\n\n3 Labels\n\nlabel &lt;- fb %&gt;%\n  label_layout(size = c(5.2, 10)\n               , border_color = \"forestgreen\"\n               , border_width = 1.5\n               ) %&gt;%\n  include_image(\n    value = \"https://doctoradofisica.uni.edu.pe/wp-content/uploads/2024/01/d123d3.webp\"\n    , size = c(3, 3)\n    , position = c(1.6, 9.5)\n    ) %&gt;% \n  include_image(\n    value = \"https://huito.inkaverse.com/img/scale.pdf\"\n    , size = c(5, 1)\n    , position = c(2.6, 8.5)\n    ) %&gt;% \n  include_barcode(\n    value = \"qrcode\"\n    , size = c(5, 5)\n    , position = c(2.6, 5.5)\n    ) %&gt;% \n  include_text(value = \"plots\"\n               , position = c(4.4, 9.5)\n               , size = 16\n               , color = \"black\"\n               , font = font[3]\n               ) %&gt;% \n  include_text(value = \"factor1\"\n               , position = c(2.6, 2.6)\n               , size = 16\n               , color = \"blue\"\n               , font = font[1]\n               , prefix = \"Factor: \"\n               ) %&gt;% \n  include_text(value = \"factor2\"\n               , position = c(2.6, 1.8)\n               , size = 15\n               , color = \"red\"\n               , font = font[1]\n               , prefix = \"Factor: \"\n               ) %&gt;% \n  include_image(\n    value = \"https://huito.inkaverse.com/img/scale.pdf\"\n    , size = c(5, 1)\n    , position = c(2.6, 0.9)\n    , opts = 'image_convert(type = \"Grayscale\")'\n    ) \n\nlabel %&gt;% label_print(mode = \"preview\")\n\n\n\n4 Labels to print\n\nlabel %&gt;% \n  label_print(mode = \"complete\"\n              , filename = \"files/labels\"\n              # , paper = c(100, 100)\n              , units = \"cm\"\n              )"
+  },
+  {
+    "objectID": "ReadMe.html",
+    "href": "ReadMe.html",
+    "title": "DOE",
+    "section": "",
+    "text": "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346\n\n\n\n\n1.Factor 1: genotipo 1.Factor 2: riego\n\n\n\nFactorial en DBCA\n\\[y = \\mu + bloque + G + G*I + \\xi\\] # Project setup\n\nsource('https://inkaverse.com/setup.r')\n\n\n\n\n\ngs &lt;- \"https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346\" %&gt;% \n  as_sheets_id()\n\nfb &lt;- gs %&gt;% \n  range_read(ss = .,sheet = \"fb\") %&gt;% \n  mutate(across(c(1:4), ~ as.factor(.))) \n\nfb %&gt;% str()"
+  },
+  {
+    "objectID": "ReadMe.html#base-de-datos",
+    "href": "ReadMe.html#base-de-datos",
+    "title": "DOE",
+    "section": "",
+    "text": "https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346"
+  },
+  {
+    "objectID": "ReadMe.html#identificar-los-factores",
+    "href": "ReadMe.html#identificar-los-factores",
+    "title": "DOE",
+    "section": "",
+    "text": "1.Factor 1: genotipo 1.Factor 2: riego"
+  },
+  {
+    "objectID": "ReadMe.html#identificar-el-modelo",
+    "href": "ReadMe.html#identificar-el-modelo",
+    "title": "DOE",
+    "section": "",
+    "text": "Factorial en DBCA\n\\[y = \\mu + bloque + G + G*I + \\xi\\] # Project setup\n\nsource('https://inkaverse.com/setup.r')"
+  },
+  {
+    "objectID": "ReadMe.html#data-import",
+    "href": "ReadMe.html#data-import",
+    "title": "DOE",
+    "section": "",
+    "text": "gs &lt;- \"https://docs.google.com/spreadsheets/d/15r7ZwcZZHbEgltlF6gSFvCTFA-CFzVBWwg3mFlRyKPs/edit?gid=172957346#gid=172957346\" %&gt;% \n  as_sheets_id()\n\nfb &lt;- gs %&gt;% \n  range_read(ss = .,sheet = \"fb\") %&gt;% \n  mutate(across(c(1:4), ~ as.factor(.))) \n\nfb %&gt;% str()"
   }
 ]
