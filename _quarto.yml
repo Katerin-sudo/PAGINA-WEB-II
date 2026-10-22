@@ -35,3 +35,20 @@ format:
 execute:
   echo: true
   eval: false
+  
+  project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Experimento de Rabanito"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+
+format:
+  html:
+    theme: cosmo
+
+lang: es
