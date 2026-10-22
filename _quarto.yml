@@ -9,7 +9,7 @@ project:
     - "!analysis.qmd"
 
 website:
-  title: "Inkaverse"
+  title: "Experimento rabanito"
   navbar:
     left:
       - href: index.qmd
@@ -40,15 +40,3 @@ execute:
   type: website
   output-dir: docs
 
-website:
-  title: "Experimento de Rabanito"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Inicio
-
-format:
-  html:
-    theme: cosmo
-
-lang: es
